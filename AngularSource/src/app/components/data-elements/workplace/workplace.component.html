@@ -1,0 +1,97 @@
+<form #formInfo="ngForm">
+    <div class="form-row">
+        <div class="col-md-9">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label>DateTime</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <p>{{datetime | date: 'dd'}}.{{datetime | date:'MM'}}.{{datetime | date: 'yyyy'}} {{datetime | date:'hh'}}:{{datetime | date: 'mm'}}:{{datetime | date:'ss'}}</p>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="platelet">Platelet</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input #plateletNameInfo="ngModel" min="0" max="100" required type="number" name="platelet" id="platelet" class="form-control" [(ngModel)]="platelet" placeholder="platelet">
+                </div>
+            </div>
+ 
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="albumin">Albumin</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input #albuminInfo="ngModel" min="0.0" max="7.0" step="0.1" required type="number" name="albumin" id="albumin" class="form-control" [(ngModel)]="albumin" placeholder="albumin">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="action" >Action</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <select #actionInfo="ngModel" required type="text" name="action" id="action" class="form-control" [(ngModel)]="userAction">
+                        <option *ngFor="let actionChoise of actionChoises" [ngValue]="actionChoise">{{ actionChoise }}</option>
+                      </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group col-md-12">
+                <button type="button" [disabled]="platelet<0 || albumin<0" class="btn btn-primary" (click)="AddData()">Add Data</button>
+            </div>
+            <div class="form-group col-md-12">
+                <button type="button" [disabled]="platelet<0 || albumin<0 || userAction===null || userAction===undefined" class="btn btn-primary" (click)="Calculate()">Calculate</button>
+            </div>
+            
+            
+        </div>
+
+        <div class="col-md-9">
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="result">Result</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input #resultInfo="ngModel" disabled type="number" name="result" id="result" class="form-control" [(ngModel)]="result" placeholder="result">
+                </div>
+            </div>
+
+        </div>
+
+    
+
+
+
+
+
+    </div>
+
+
+    <table>
+        <tr>
+            <td colspan="4">Labs-Show History</td>
+        </tr>
+        <tr>
+            <td *ngFor = "let header of headers">
+              {{header}}
+            </td>
+        </tr>
+        <tr *ngFor = "let medicalData of allMedicalData; let i = index">
+            <td>
+                {{medicalData.enterDate | date: 'dd'}}.{{medicalData.enterDate | date:'MM'}}.{{medicalData.enterDate | date: 'yyyy'}} {{medicalData.enterDate | date: 'hh'}}:{{medicalData.enterDate | date:'mm'}}
+            </td>
+            <td>
+                {{medicalData.platelets}}
+            </td>
+            <td>
+                {{medicalData.albumin}}
+            </td>
+            
+        </tr>
+    </table>
+</form>
